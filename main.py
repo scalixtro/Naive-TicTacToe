@@ -76,17 +76,6 @@ class PC_Player(Player):
 
         self.player_cells.append(mark)
         board.set_cell_value(mark, self.symbol)
-    
-
-def user_mark(player: Player, board: Board) -> None:
-    """User (person) turn"""
-    while 1:
-        print('Introduzca una casilla de las siguientes: ')
-        print(board.available_cells)
-        usr_input = int(input())
-        if usr_input in board.available_cells:
-            player.place_mark(usr_input, board)
-            break
 
 
 def check_game_over(board: Board, turn_counter: int) -> bool:
@@ -104,6 +93,28 @@ def check_game_over(board: Board, turn_counter: int) -> bool:
         return True, 'Draw'
     else:
         return False, None
+
+
+def print_available_cells(available_cells):
+    cells = ['X'] * 9
+    for i in range(9):
+        cells[i] = i if i in available_cells else 'X'
+    print(f"""   {cells[0]} | {cells[1]} | {cells[2]} 
+  -----------
+   {cells[3]} | {cells[4]} | {cells[5]} 
+  -----------
+   {cells[6]} | {cells[7]} | {cells[8]} """)
+
+
+def user_mark(player: Player, board: Board) -> None:
+    """User (person) turn"""
+    while 1:
+        print('Introduzca una casilla de las siguientes: ')
+        print_available_cells(board.available_cells)
+        usr_input = int(input())
+        if usr_input in board.available_cells:
+            player.place_mark(usr_input, board)
+            break
 
 
 if __name__ == '__main__':
